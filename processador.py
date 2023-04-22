@@ -98,4 +98,4 @@ coord = [-21.15194196941009, -45.092157664716275]
 folium.Marker(location=[coord[0], coord[1]], tooltip="Você",  icon=cowboy, popup="Fazenda Açude").add_to(mapa)
 
 # Salvar o mapa em um arquivo HTML
-mapa.save('mapa_antenas.html')
+mapa.save('index.html')
