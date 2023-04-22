@@ -88,14 +88,14 @@ for index, row in df_filtrado.iterrows():
 
 
 # Icone Cowboy
-icon_url = 'doc/emoji_chapeu.png'
-cowboy = folium.features.CustomIcon(icon_url, icon_size=(35, 35))
+# icon_url = 'doc/emoji_chapeu.png'
+# cowboy = folium.features.CustomIcon(icon_url, icon_size=(35, 35))
 
 # Sua geolocalização
-coord = [-21.15194196941009, -45.092157664716275]
+# coord = [-21.15194196941009, -45.092157664716275]
 
 # Coloca você no mapa
-folium.Marker(location=[coord[0], coord[1]], tooltip="Você",  icon=cowboy, popup="Fazenda Açude").add_to(mapa)
+# folium.Marker(location=[coord[0], coord[1]], tooltip="Você",  icon=cowboy, popup="Fazenda Açude").add_to(mapa)
 
 # Salvar o mapa em um arquivo HTML
 mapa.save('index.html')
