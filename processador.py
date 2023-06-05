@@ -1,6 +1,7 @@
 import random
 import pandas as pd
 import folium
+import numpy as np
 from folium.plugins import LocateControl, MarkerCluster
 
 # Ler os arquivos CSV com as informações das antenas
@@ -39,7 +40,7 @@ coordenadas_adicionadas = set()
 
 # Percorre o DataFrame e monta os pontos das torres no mapa
 for index, row in df_filtrado.iterrows():
-    if (row['Latitude'], row['Longitude']) not in coordenadas_adicionadas:
+    if (row['Latitude'], row['Longitude']) not in coordenadas_adicionadas and not np.isnan(row['Latitude']) and not np.isnan(row['Longitude']):
         operadora_label = row['NomeEntidade']
 
         if operadora_label == 'TELEFONICA BRASIL S.A.':
