@@ -5,11 +5,11 @@ import numpy as np
 from folium.plugins import LocateControl, MarkerCluster
 
 # Ler os arquivos CSV com as informações das antenas
-df1 = pd.read_csv('raw_data/ribeirao.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz'])
-df2 = pd.read_csv('raw_data/perdoes.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz'])
-df3 = pd.read_csv('raw_data/canaverde.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz'])
-df4 = pd.read_csv('raw_data/nepomuceno.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz'])
-df5 = pd.read_csv('raw_data/lavras.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz'])
+df1 = pd.read_csv('raw_data/ribeirao.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz', 'DataLicenciamento'])
+df2 = pd.read_csv('raw_data/perdoes.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz', 'DataLicenciamento'])
+df3 = pd.read_csv('raw_data/canaverde.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz', 'DataLicenciamento'])
+df4 = pd.read_csv('raw_data/nepomuceno.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz', 'DataLicenciamento'])
+df5 = pd.read_csv('raw_data/lavras.csv', sep=',', encoding='iso-8859-1', usecols=['NomeEntidade', 'EnderecoEstacao', 'Latitude', 'Longitude', 'AlturaAntena', 'Tecnologia', 'FreqTxMHz', 'DataLicenciamento'])
 df = pd.concat([df1, df2, df3, df4, df5], ignore_index=True)
 
 # Remove espaços a direita do nome das operadoras
@@ -63,25 +63,25 @@ for index, row in df_filtrado.iterrows():
         longitude = row['Longitude']
         altura = row['AlturaAntena']
         
-        html = f"<p>{operadora_label}</p>"
-        html += f"<p>{row['EnderecoEstacao']} </p>"
-        html += "<table><tr><th>Tecnologia</th><th>Frequência</th><th>Altura</th></tr>"
+        html = f"<p><strong>Operadora:</strong> {operadora_label}</p>"
+        html += f"<p><strong>Endereço:</strong> {row['EnderecoEstacao']} </p>"
+        html += "<table><tr style='background-color: gray; color: white;'><th style='width: 200px; padding: 10px;'>Tecnologia</th><th style='width: 200px; padding: 10px;'>Frequência</th><th style='width: 200px; padding: 10px;'>Altura</th><th style='width: 200px; padding: 10px;'>Licenciamento</th></tr>"
 
         # Filtra as linhas com as mesmas coordenadas e operadora
         df_unico = df_filtrado[(df_filtrado['NomeEntidade'] == row['NomeEntidade']) & (df_filtrado['Latitude'] == row['Latitude']) & (df_filtrado['Longitude'] == row['Longitude'])].copy()
 
         # Agrupa por tecnologia e frequência e pega a altura da antena
-        agrupado = df_unico.groupby(['Tecnologia', 'FreqTxMHz']).agg({'AlturaAntena': 'max'}).reset_index()
+        agrupado = df_unico.groupby(['Tecnologia', 'FreqTxMHz', 'DataLicenciamento']).agg({'AlturaAntena': 'max'}).reset_index()
 
         # Ordena os dados por 'FreqTxMHz'
         agrupado = agrupado.sort_values(by='FreqTxMHz')
 
         # Adiciona as informações da tabela
-        for tecnologia, frequencia, alturas in zip(agrupado['Tecnologia'], agrupado['FreqTxMHz'], agrupado['AlturaAntena']):
-            html += f"<tr><td>{str(tecnologia)}</td><td>{frequencia}</td><td>{altura}</td></tr>"
+        for tecnologia, frequencia, alturas, data in zip(agrupado['Tecnologia'], agrupado['FreqTxMHz'], agrupado['AlturaAntena'], agrupado['DataLicenciamento']):
+            html += f"<tr><td style='text-align: left;'>{tecnologia}</td><td style='text-align: left;'>{frequencia} Mhz</td><td style='text-align: center;'>{altura} m</td><td style='text-align: center;'>{data}</td></tr>"
 
         html += "</table>"
-        html += f"<p>{latitude},{longitude}</p>"
+        html += f"<p><strong>Localização: </strong> {latitude},{longitude}</p>"
         coordenadas_adicionadas.add((latitude, longitude))
 
         # Adiciona um pouco de aleatoriedade nas coordenadas para evitar que os pontos fiquem sobrepostos
