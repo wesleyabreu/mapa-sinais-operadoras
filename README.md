@@ -16,3 +16,24 @@ o download do arquivo CSV filtrando sua localidade e colocando no código e exec
 
 
 Ao executar o processador.py ele demora um tempinho e aparece alguns warning, mas tudo bem só aguardar e depois abrir o HTML gerado.
+
+## Documentação do código:
+
+### Leitura dos dados:
+O código lê dados de antenas de diferentes localidades a partir de arquivos CSV e os armazena em dataframes do Pandas.
+
+### Limpeza e filtragem:
+São removidos espaços em branco à direita do nome das operadoras e se filtram somente as operadoras válidas.
+
+### Criação do Mapa:
+É criado um objeto mapa usando a biblioteca Folium, centrado em coordenadas do Brasil e é adicionada uma camada de relevo do Google Maps.
+
+### Controle de Camadas e Localização: 
+É adicionado um controle de camadas e um controle de localização. 
+
+### Descrição de Tecnologias:
+As tecnologias das antenas são padronizadas e dados ausentes são preenchidos.
+
+### Adição de Pontos ao Mapa:
+São adicionados marcadores pra cada antena. Cada marcador é personalizado com um ícone específico para a operadora e contém informações como endereço, tecnologia, frequência, altura e data de licenciamento.
+
