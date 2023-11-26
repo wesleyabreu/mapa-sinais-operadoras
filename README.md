@@ -37,6 +37,9 @@ As tecnologias das antenas são padronizadas e dados ausentes são preenchidos.
 ### Adição de Pontos ao Mapa:
 São adicionados marcadores pra cada antena. Cada marcador é personalizado com um ícone específico para a operadora e contém informações como endereço, tecnologia, frequência, altura e data de licenciamento.
 
+## Licença
+
+A menos que especificado de outra forma, todo o código-fonte hospedado neste repositório está licenciado sob a licença GPLv3. Consulte o arquivo [LICENSE](./LICENSE) para obter mais detalhes.
 
 ## Cellular operator signal map
 
@@ -78,3 +81,7 @@ Antenna technologies are standardized and missing data is filled in.
 
 ### Adding Points to the Map:
 Markers are added for each antenna. Each marker is personalized with a carrier-specific icon and contains information such as address, technology, frequency, height, and licensing date.
+
+## License
+
+Unless otherwise specified, all source code hosted on this repository is licensed under the GPLv3 license. See the [LICENSE](./LICENSE) file for more details.
